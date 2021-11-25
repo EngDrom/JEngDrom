@@ -2,6 +2,16 @@ package org.EngDrom.EngDrom.conf;
 
 import org.EngDrom.EngDrom.EngDromConfig;
 
+/**
+ * 
+ * Static final configuration determined at runtime
+ * Based on command arguments. If no arguments or --help
+ * Is provided, the InputConf constructor will result with
+ * A print on how to use the command line tool and exit the
+ * Program
+ * @author MrThimote, Itai12
+ *
+ */
 public class InputConf {
 	
 	public final String project_path;

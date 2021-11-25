@@ -1,5 +1,13 @@
 package org.EngDrom.EngDrom;
 
+/**
+ * 
+ * Static configuration for the EngDrom project
+ * Also contains a system to print on how to use engdrom
+ * In a command line
+ * @author MrThimote, Itai12
+ *
+ */
 public class EngDromConfig {
 
 	public static final String RELEASE_TYPE = "Dev";
