@@ -29,4 +29,4 @@ hs_err_pid*
 bin/
 
 # Test area for the project
-project/
+/testproject/
