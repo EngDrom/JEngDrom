@@ -25,6 +25,20 @@ import org.EngDrom.EngDrom.EngDromConfig;
  */
 public class UserPreferences {
 	
+	// Project configuration
+	public String project_height          = "500";
+	public String project_width           = "500";
+	public int getProjectHeight() {
+		try {
+			return Integer.parseInt(project_height);
+		} catch (Exception e) { return 500; }
+	}
+	public int getProjectWidth() {
+		try {
+			return Integer.parseInt(project_width);
+		} catch (Exception e) { return 500; }
+	}
+	
 	// BuildVersion configuration
 	public String buildversion_major      = EngDromConfig.MAJOR;
 	public String buildversion_minor      = EngDromConfig.MINOR;
