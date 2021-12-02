@@ -1,4 +1,4 @@
-#version 310 es
+#version 330 core
 
 in vec2 passTCoord;
 in vec4 passColor;

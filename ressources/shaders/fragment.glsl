@@ -1,4 +1,4 @@
-#version 310 es
+#version 330 core
 
 out vec4 outColor;
 
