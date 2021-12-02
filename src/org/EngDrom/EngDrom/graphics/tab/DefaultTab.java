@@ -2,6 +2,8 @@ package org.EngDrom.EngDrom.graphics.tab;
 
 import org.EngDrom.EngDrom.graphics.GraphicManager;
 import org.EngDrom.LibOpenGL.engine.graphics.Renderer;
+import org.EngDrom.LibOpenGL.engine.graphics.font.Font;
+import org.EngDrom.LibOpenGL.engine.graphics.font.FontManager;
 import org.EngDrom.LibOpenGL.engine.graphics.meshes.GUIMesh;
 import org.EngDrom.LibOpenGL.engine.maths.Vector3f;
 import org.lwjglx.util.vector.Vector4f;
@@ -9,8 +11,11 @@ import org.lwjglx.util.vector.Vector4f;
 public class DefaultTab extends TabComponent {
 
 	private final GUIMesh background_ui;
+	private final GUIMesh test_text;
 	public DefaultTab() {
 		background_ui = new GUIMesh(new Vector4f(0.2f, 0.2f, 0.2f, 1));
+		Font calibri = FontManager.getFont("./ressources/font/calibri.png", "./ressources/font/calibri.fnt");
+		test_text = calibri.to_text("text\ntp");
 	}
 	
 	@Override
@@ -41,12 +46,14 @@ public class DefaultTab extends TabComponent {
 
 	@Override
 	public void render(Renderer renderer) {
+		renderer.renderMesh(test_text);
 		renderer.renderMesh(background_ui);
 	}
 
 	@Override
 	public void create() {
 		background_ui.create();
+		test_text.create();
 	}
 
 }

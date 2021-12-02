@@ -35,7 +35,7 @@ public class GraphicManager {
 			);
 		GraphicManager.window.create();
 		
-		renderer = new Renderer(null, window);
+		renderer = new Renderer(null, window, project.user_pref.graphics_shader_version);
 		renderer.create();
 		
 		INITIALIZED = true;

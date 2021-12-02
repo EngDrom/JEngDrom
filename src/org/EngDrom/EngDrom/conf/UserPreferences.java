@@ -47,6 +47,7 @@ public class UserPreferences {
 	
 	// Graphics configuration
 	public String graphics_engine         = "OpenGL";
+	public String graphics_shader_version = "";
 	
 	// External parameters that will not modify the configuration file
 	// Because they are either static or final
