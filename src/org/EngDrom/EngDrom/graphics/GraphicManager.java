@@ -1,11 +1,12 @@
 package org.EngDrom.EngDrom.graphics;
 
-import java.util.ArrayList;
-
+import org.EngDrom.EngDrom.graphics.components.NavComponent;
 import org.EngDrom.EngDrom.graphics.tab.DefaultTab;
 import org.EngDrom.EngDrom.graphics.tab.TabComponent;
 import org.EngDrom.EngDrom.project.Project;
 import org.EngDrom.LibOpenGL.engine.graphics.Renderer;
+import org.EngDrom.LibOpenGL.engine.graphics.font.Font;
+import org.EngDrom.LibOpenGL.engine.graphics.font.FontManager;
 import org.EngDrom.LibOpenGL.engine.io.Window;
 import org.lwjgl.glfw.GLFW;
 
@@ -19,15 +20,14 @@ public class GraphicManager {
 	
 	public static boolean INITIALIZED = false;
 	
-	public static ArrayList<TabComponent> tabs;
-	public static int                     cur_tab = 0;
-	public static Window                  window;
+	public static NavComponent navbar = new NavComponent();
+	public static Window window;
 	public static Renderer renderer;
+	public static Font default_font;
 	
 	public static void init(Project project) {
 		GLFW.glfwInit();
 		
-		tabs = new ArrayList<TabComponent>();
 		GraphicManager.window = new Window(
 				project.user_pref.getProjectWidth(), 
 				project.user_pref.getProjectHeight(), 
@@ -37,8 +37,14 @@ public class GraphicManager {
 		
 		renderer = new Renderer(null, window, project.user_pref.graphics_shader_version);
 		renderer.create();
+	
+		default_font = FontManager.getFont("./ressources/font/calibri.png", "./ressources/font/calibri.fnt");
+		default_font.font_material.create();
 		
 		INITIALIZED = true;
+		navbar.create();
+		navbar.build(0, window.getHeight() - 40, window.getWidth(), 40);
+		openTab(new DefaultTab());
 		openTab(new DefaultTab());
 		setTab(0);
 	}
@@ -57,28 +63,27 @@ public class GraphicManager {
 			comp.create();
 		
 		comp.created = true;
-		tabs.add(comp);
+		navbar.openTab(comp);
 	}
 	
 	public static TabComponent getCurrentTab() {
-		if (tabs.size() > cur_tab && cur_tab >= 0)
-			return tabs.get(cur_tab);
-		return null;
+		return navbar.getCurrentTab();
 	}
 	
 	public static void setTab(int tab) {
-		cur_tab = tab;
+		navbar.setTab(tab);
 		if (getCurrentTab() != null) 
 			getCurrentTab().build(0, 0, window.getWidth(), window.getHeight());
 	}
 	
 	public static void setTab(TabComponent tab) {
-		cur_tab = tabs.indexOf(tab);
+		navbar.setTab(tab);
 		if (getCurrentTab() != null) 
 			getCurrentTab().build(0, 0, window.getWidth(), window.getHeight());
 	}
 	
 	public static void update(Renderer renderer) {
+		navbar.render(renderer);
 		if (getCurrentTab() != null) getCurrentTab().render(renderer);
 	}
 	
