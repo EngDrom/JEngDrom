@@ -52,7 +52,7 @@ public class UserPreferences {
 	// External parameters that will not modify the configuration file
 	// Because they are either static or final
 	public static final Pattern category_pattern = Pattern.compile("\\[[a-zA-Z]*\\]");
-	public static final Pattern      set_pattern = Pattern.compile("[a-zA-Z_]*=[a-zA-Z0-9]*");
+	public static final Pattern      set_pattern = Pattern.compile("[a-zA-Z_]*=[a-zA-Z0-9/]*");
 	public static final Pattern     name_pattern = Pattern.compile("[a-zA-Z]*_[a-zA-Z_]*");
 	public final boolean had_error;
 	

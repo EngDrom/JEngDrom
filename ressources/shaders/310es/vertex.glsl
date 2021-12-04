@@ -1,5 +1,5 @@
 #version 310 es
-
+precision mediump float;
 layout(location = 0) in vec3 position;
 
 out vec3 passColor;
