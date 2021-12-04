@@ -1,5 +1,5 @@
 #version 310 es
-
+precision mediump float;
 in vec2 passTCoord;
 
 out vec4 outColor;
