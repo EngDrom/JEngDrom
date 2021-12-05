@@ -44,8 +44,11 @@ public class GraphicManager {
 		INITIALIZED = true;
 		navbar.create();
 		navbar.build(0, window.getHeight() - 40, window.getWidth(), 40);
-		openTab(new DefaultTab());
-		openTab(new DefaultTab());
+		openTab(new DefaultTab("Test Tab"));
+		openTab(new DefaultTab("Test Tab (2)"));
+		openTab(new DefaultTab("Test Tab (3)"));
+		openTab(new DefaultTab("Test Tab (4)"));
+		openTab(new DefaultTab("Test Tab (5)"));
 		setTab(0);
 	}
 	

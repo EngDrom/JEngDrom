@@ -13,16 +13,22 @@ public class DefaultTab extends TabComponent {
 
 	private final GUIMesh background_ui;
 	private final TextMesh test_text;
-	public DefaultTab() {
+	private final String name;
+	public DefaultTab(String name) {
 		background_ui = new GUIMesh(new Vector4f(0.2f, 0.2f, 0.2f, 1));
 		Font calibri = FontManager.getFont("./ressources/font/calibri.png", "./ressources/font/calibri.fnt");
 		test_text = calibri.to_text("text");
 		System.out.println(test_text.ratio_woh);
+		
+		if (name.equals("") || name == null)
+			this.name = "Test Tab";
+		else
+			this.name = name;
 	}
 	
 	@Override
 	public String getTabName() {
-		return "Test Tab";
+		return name;
 	}
 
 	@Override

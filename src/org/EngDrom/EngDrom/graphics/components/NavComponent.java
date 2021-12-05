@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.EngDrom.EngDrom.graphics.GraphicManager;
 import org.EngDrom.EngDrom.graphics.tab.TabComponent;
+import org.EngDrom.EngDrom.utils.tuples.Tuple;
 import org.EngDrom.LibOpenGL.engine.graphics.Renderer;
 import org.EngDrom.LibOpenGL.engine.graphics.meshes.GUIMesh;
 import org.EngDrom.LibOpenGL.engine.graphics.meshes.TextMesh;
@@ -13,7 +14,7 @@ import org.lwjglx.util.vector.Vector4f;
 public class NavComponent extends Component {
 
 	public ArrayList<TabComponent> tabs  = new ArrayList<TabComponent>();
-	public ArrayList<TextMesh>     texts = new ArrayList<TextMesh>();
+	public ArrayList<Tuple>     texts = new ArrayList<Tuple>();
 	public int                   cur_tab = 0;
 	public GUIMesh                    bg = null;
 	private int             text_advance = 10;
@@ -48,8 +49,13 @@ public class NavComponent extends Component {
 
 	@Override
 	public void render(Renderer renderer) {
-		for (TextMesh txt:texts) {
+		for (Tuple tuple:texts) {
+			TextMesh txt = (TextMesh) tuple.get(TextMesh.class, 0);
 			renderer.renderMesh(txt);
+		}
+		for (Tuple tuple:texts) {
+			GUIMesh  bg  = (GUIMesh)  tuple.get(GUIMesh.class,  1);
+			renderer.renderMesh(bg);
 		}
 		renderer.renderMesh(bg);
 	}
@@ -62,7 +68,8 @@ public class NavComponent extends Component {
 		tabs.add(comp);
 		
 		TextMesh txt = GraphicManager.default_font.to_text(comp.getTabName());
-		float width  = txt.ratio_woh * (h - 10) - 10;
+		float width    = txt.ratio_woh * (h - 10) - 10;
+		float bg_width = txt.ratio_woh * (h - 10) + 10;
 		
 		txt.setScalar(new Vector3f(width / GraphicManager.window.getWidth(),
 				              ((float)h - 10) / GraphicManager.window.getHeight(),
@@ -71,9 +78,19 @@ public class NavComponent extends Component {
 				(sy + ((float)h + 10) / 2) / GraphicManager.window.getHeight() * 2 - 1, 0));
 		txt.create();
 		
+		GUIMesh background = new GUIMesh(new Vector4f(0.25f, 0.25f, 0.25f, 1f));
+		if (texts.size() % 2 == 0)
+			background.color = new Vector4f(0.3f, 0.3f, 0.3f, 1f);
+		background.setScalar(new Vector3f(bg_width / GraphicManager.window.getWidth(),
+				((float)h + 10) / GraphicManager.window.getHeight(),
+				1));
+		background.setTranslation(new Vector3f((text_advance + width / 2) / GraphicManager.window.getWidth() * 2 - 1, 
+				(sy + ((float)h + 10) / 2) / GraphicManager.window.getHeight() * 2 - 1, 0));
+		background.create();
+		
 		text_advance += width + 20;
 		
-		texts.add(txt);
+		texts.add(new Tuple(true,  txt, background));
 	}
 	
 	public TabComponent getCurrentTab() {
