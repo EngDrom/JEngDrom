@@ -28,6 +28,7 @@ public class UserPreferences {
 	// Project configuration
 	public String project_height          = "500";
 	public String project_width           = "500";
+	public String project_name            = "EngDrom Default Project";
 	public int getProjectHeight() {
 		try {
 			return Integer.parseInt(project_height);
@@ -49,10 +50,13 @@ public class UserPreferences {
 	public String graphics_engine         = "OpenGL";
 	public String graphics_shader_version = "";
 	
+	// Start configuration
+	public String start_level = ":empty:";
+	
 	// External parameters that will not modify the configuration file
 	// Because they are either static or final
 	public static final Pattern category_pattern = Pattern.compile("\\[[a-zA-Z]*\\]");
-	public static final Pattern      set_pattern = Pattern.compile("[a-zA-Z_]*=[a-zA-Z0-9/]*");
+	public static final Pattern      set_pattern = Pattern.compile("[a-zA-Z_]*=[a-zA-Z0-9/ ]*");
 	public static final Pattern     name_pattern = Pattern.compile("[a-zA-Z]*_[a-zA-Z_]*");
 	public final boolean had_error;
 	
@@ -88,7 +92,7 @@ public class UserPreferences {
 						Field ref_field = UserPreferences.class.getField(category + "_" + field);
 						ref_field.set(this, value);
 					} catch ( Exception e ) {
-						System.out.println("Could not found the field " + field + " in the category " + category + ". Look at your config file if there are no problems.");
+						System.out.println("Could not find the field " + field + " in the category " + category + ". Look at your config file if there are no problems.");
 					}
 				}
 			}

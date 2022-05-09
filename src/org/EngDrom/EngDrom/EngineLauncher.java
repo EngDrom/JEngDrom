@@ -1,8 +1,10 @@
 package org.EngDrom.EngDrom;
 
 import org.EngDrom.EngDrom.conf.InputConf;
-import org.EngDrom.EngDrom.graphics.GraphicManager;
 import org.EngDrom.EngDrom.project.Project;
+import org.EngDrom.GDrom.EngineManager;
+import org.EngDrom.GDrom.opengl.Window;
+import org.lwjgl.glfw.GLFW;
 
 /**
  * 
@@ -17,10 +19,16 @@ public class EngineLauncher {
 		InputConf user_config = new InputConf(args);
 		Project   project     = new Project(user_config);
 		
-		GraphicManager.init(project);
-		GraphicManager.loop();
+		Window window = EngineManager.createWindow(1200, 800, project.user_pref.project_name);
+		window.setContext();
 		
 		project.user_pref.save(user_config.project_path + "user.pref");
+		
+		while (!GLFW.glfwWindowShouldClose(window.getWindow())) {
+			GLFW.glfwSwapBuffers(window.getWindow());
+
+			GLFW.glfwPollEvents();
+		}
 	}
 	
 }
